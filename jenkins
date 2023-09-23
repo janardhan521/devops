@@ -1,0 +1,16 @@
+pipeline{
+  agent any
+  stages{
+    stage('Build'){
+     steps{
+        sh 'mvn -f devops/pom.xml clean package'
+      }
+      post{
+        success{
+          echo 'Archive artifacts...'
+          archiveArtifacts artifacts: '**/*.war'
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+pipeline{
+  agent any
+  stages{
+    stage('Build'){
+     steps{
+        sh 'mvn -f pom.xml clean package'
+      }
+      post{
+        success{
+          echo 'Archive artifacts...'
+          archiveArtifacts artifacts: '**/*.war'
+        }
+      }
+    }
+    stage('Prepare the docker image file'){
+      steps{
+           sh 'docker build . -t jenkindockertomcatwebapp:${env.BUILD_ID}'
+          }
+    }
+  }
+}   

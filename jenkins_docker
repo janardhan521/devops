@@ -12,10 +12,10 @@ pipeline{
         }
       }
     }
-    stage('Prepare the docker image file'){
-      steps{
-           sh 'docker build . -t jenkindockertomcatwebapp:${env.BUILD_ID}'
-          }
-    }
+    Stage('Create Tomcat Docker Image'){
+            steps {
+                sh "docker build . -t tomcatsamplewebapp:${env.BUILD_ID}"
+            }
+        }
   }
 }   
